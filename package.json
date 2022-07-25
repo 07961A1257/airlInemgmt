@@ -1,0 +1,102 @@
+{
+  "name": "react-airline-management-app",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "setupTests.js",
+  "scripts": {
+    "start": "run-p start:dev start:api",
+    "start:dev": "webpack serve --config webpack.config.dev.js --port 3000",
+    "prestart:api": "node src/api/tools/createMockDb.js",
+    "start:api": "node src/api/tools/apiServer.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "test": "jest --watchAll",
+    "test:ci": "jest",
+    "clean:build": "rimraf ./build && mkdir build",
+    "prebuild": "run-p clean:build test:ci",
+    "build": "webpack --config webpack.config.prod.js",
+    "post:build": "run-p start:api serve:build",
+    "serve:build": "http-server ./build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/css": "^11.9.0",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@iconify/react": "^3.2.2",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.91",
+    "@mui/material": "^5.9.1",
+    "@testing-library/jest-dom": "^5.16.4",
+    "axios": "^0.27.2",
+    "devextreme-react": "^22.1.3",
+    "formik": "^2.2.9",
+    "moxios": "^0.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
+    "react-helmet-async": "^1.3.0",
+    "react-redux": "^8.0.2",
+    "react-router-dom": "^6.3.0",
+    "redux": "^4.2.0",
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^2.4.1",
+    "simplebar": "^5.3.8",
+    "simplebar-react": "^2.4.1",
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.5",
+    "babel-preset-react-app": "^10.0.1",
+    "css-loader": "^6.7.1",
+    "cssnano": "^5.1.12",
+    "enzyme": "^3.11.0",
+    "eslint": "^7.32.0",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-react": "^7.30.1",
+    "global-jsdom": "^8.5.0",
+    "html-webpack-plugin": "^5.5.0",
+    "http-server": "^14.1.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
+    "jsdom": "^20.0.0",
+    "json-server": "^0.17.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^8.4.14",
+    "postcss-loader": "^7.0.1",
+    "prettier": "^2.7.1",
+    "redux-immutable-state-invariant": "^2.1.0",
+    "rimraf": "^3.0.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3"
+  }
+}
