@@ -103,13 +103,13 @@ const SignIn = ({ user, signInUser }) => {
       // eslint-disable-next-line no-unused-vars
       .catch(async (err) => {
         const user = await createUser({
-          ...response.profileObj.data,
+          ...response.profileObj,
           id,
           isAdmin: false
         });
-        window.localStorage.setItem('user', JSON.stringify(user));
+        window.localStorage.setItem('user', JSON.stringify(user.data));
         signInUser({
-          user,
+          ...user.data,
           googleAuth: true
         });
       });
@@ -179,21 +179,31 @@ const SignIn = ({ user, signInUser }) => {
               Sign In
             </LoadingButton>
             <Grid container>
-              <Grid item xl={6} lg={6} md={6} sm={12} xs={12}>
-                <GoogleLogin
-                  dataTest="nativeLogin"
-                  className="GoogleButton"
-                  clientId="813755426604-c14fjkrfta5up8p97rptleprf7ua6l3l.apps.googleusercontent.com"
-                  buttonText="Login with Google"
-                  cookiePolicy={'single_host_origin'}
-                  onSuccess={(response) => {
-                    googleSuccessResponse(response);
-                  }}
-                  onFailure={(response) => {
-                    googleFailureResponse(response);
-                  }}
-                />
-              </Grid>
+              <GoogleLogin
+                dataTest="nativeLogin"
+                clientId="813755426604-c14fjkrfta5up8p97rptleprf7ua6l3l.apps.googleusercontent.com"
+                buttonText="Login with Google"
+                cookiePolicy={'single_host_origin'}
+                onSuccess={(response) => {
+                  googleSuccessResponse(response);
+                }}
+                onFailure={(response) => {
+                  googleFailureResponse(response);
+                }}
+                render={(renderProps) => (
+                  <LoadingButton
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                    loading={loading}
+                    color="error"
+                    onClick={renderProps.onClick}
+                    endIcon={<KeyboardArrowRight />}>
+                    Login with Google
+                  </LoadingButton>
+                )}
+              />
             </Grid>
           </Box>
         </Box>
