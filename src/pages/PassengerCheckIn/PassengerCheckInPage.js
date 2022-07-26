@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Paper, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 import useClasses from '../../hooks/useClasses';
 import FlightData from './FlightData';
 import DataGrid, {
@@ -43,6 +44,7 @@ const PassengerCheckInPage = () => {
   const classes = useClasses(styles);
   const [flightId, setFlightId] = React.useState(1);
   const [data, setData] = React.useState([]);
+  const users = useSelector((state) => state.auth.users);
   // eslint-disable-next-line no-unused-vars
   const seats = [
     {
@@ -119,8 +121,8 @@ const PassengerCheckInPage = () => {
                 <Editing
                   refreshMode={'full'}
                   mode="row"
-                  allowDeleting={true}
-                  allowUpdating={true}
+                  allowDeleting={users.isAdmin}
+                  allowUpdating={users.isAdmin}
                 />
                 <Scrolling rowRenderingMode="virtual"></Scrolling>
                 <Sorting mode="multiple" />

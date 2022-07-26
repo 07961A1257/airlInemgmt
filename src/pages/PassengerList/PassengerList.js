@@ -13,7 +13,7 @@ import DataGrid, {
   SearchPanel
 } from 'devextreme-react/data-grid';
 import 'devextreme/dist/css/dx.material.teal.dark.css';
-import { Typography } from '@mui/material';
+import { Container, Typography } from '@mui/material';
 import {
   loadPassengersList,
   saveUpdatePassengersList,
@@ -23,11 +23,11 @@ import {
 const PassengerList = () => {
   const dispatch = useDispatch();
   const passengers = useSelector((state) => state.passengers);
+  const users = useSelector((state) => state.auth.users);
   const allowedPageSizes = [10, 20, 30, 40, 50];
-  console.log(passengers);
 
   React.useEffect(() => {
-    dispatch(loadPassengersList());
+    if (passengers.length === 0) dispatch(loadPassengersList());
   }, []);
 
   const onRowUpdating = (e) => {
@@ -47,7 +47,7 @@ const PassengerList = () => {
   };
 
   return (
-    <div>
+    <Container>
       <Typography variant="h3">Passengers List</Typography>
       <DataGrid
         dataSource={passengers}
@@ -61,9 +61,9 @@ const PassengerList = () => {
         <Editing
           refreshMode={'full'}
           mode="row"
-          allowAdding={true}
-          allowDeleting={true}
-          allowUpdating={true}
+          allowAdding={users.isAdmin}
+          allowDeleting={users.isAdmin}
+          allowUpdating={users.isAdmin}
         />
         <Scrolling rowRenderingMode="virtual"></Scrolling>
         <Column dataField="name">
@@ -98,7 +98,7 @@ const PassengerList = () => {
           showNavigationButtons
         />
       </DataGrid>
-    </div>
+    </Container>
   );
 };
 

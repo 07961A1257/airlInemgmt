@@ -5,11 +5,6 @@ import { Container } from '@mui/system';
 import { PropTypes } from 'prop-types';
 
 const DashboardPage = ({ auth: { users } }) => {
-  // eslint-disable-next-line no-debugger
-
-  // eslint-disable-next-line no-unused-vars
-  const response = { ...users };
-  console.log(users);
   const renderUserInfo = (users) => {
     if (!users) {
       return (

@@ -37,6 +37,12 @@ module.exports = {
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+      '<rootDir>/test/jest/__mocks__/fileMock.js',
+    '\\.(css|less)$': '<rootDir>/src/api/tools/styleMock.js'
+  },
+
   // Indicates whether each individual test should be reported during the run
   verbose: false
 };

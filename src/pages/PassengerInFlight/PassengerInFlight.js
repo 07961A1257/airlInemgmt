@@ -6,11 +6,12 @@ import DataGrid, {
   Sorting,
   HeaderFilter,
   SearchPanel,
+  Editing,
   Column,
   RequiredRule
 } from 'devextreme-react/data-grid';
 import 'devextreme/dist/css/dx.material.teal.dark.css';
-
+import { useSelector } from 'react-redux';
 import useClasses from '../../hooks/useClasses';
 import FlightData from './../PassengerCheckIn/FlightData';
 
@@ -40,6 +41,7 @@ const PassengerInFlight = () => {
   const [flightId, setFlightId] = React.useState(1);
   const [passengersData, setPassengersData] = React.useState([]);
   const classes = useClasses(styles);
+  const users = useSelector((state) => state.auth.users);
 
   const selectedFlight = (value) => {
     setFlightId(value);
@@ -78,6 +80,12 @@ const PassengerInFlight = () => {
               allowColumnResizing={true}
               columnAutoWidth={true}
               onCellPrepared={onCellPrepared}>
+              <Editing
+                refreshMode={'full'}
+                mode="row"
+                allowDeleting={users.isAdmin}
+                allowUpdating={users.isAdmin}
+              />
               <Scrolling rowRenderingMode="virtual"></Scrolling>
               <Sorting mode="multiple" />
 

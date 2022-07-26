@@ -19,7 +19,7 @@ const initialServiceList = {
 const AncillaryServicePage = () => {
   const dispatch = useDispatch();
   const ancillaryList = useSelector((state) => state.ancillaryList);
-
+  const users = useSelector((state) => state.auth.users);
   React.useEffect(() => {
     dispatch(loadAncillaryList());
   }, []);
@@ -54,11 +54,10 @@ const AncillaryServicePage = () => {
         <Editing
           refreshMode={'full'}
           mode="row"
-          allowAdding={true}
-          allowDeleting={true}
-          allowUpdating={true}
+          allowAdding={users.isAdmin}
+          allowDeleting={users.isAdmin}
+          allowUpdating={users.isAdmin}
         />
-        {/* <Column dataField="id" allowEditing={false} visible={false} /> */}
         <Column dataField="flight">
           <RequiredRule />
         </Column>
