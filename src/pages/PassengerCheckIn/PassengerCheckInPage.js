@@ -1,6 +1,6 @@
 import React from 'react';
-import { Grid, Paper, Box } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Grid, Paper, Box, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import useClasses from '../../hooks/useClasses';
 import FlightData from './FlightData';
 import DataGrid, {
@@ -16,10 +16,10 @@ import DataGrid, {
 } from 'devextreme-react/data-grid';
 import 'devextreme/dist/css/dx.material.teal.dark.css';
 import {
-  getCheckInPassengersByFlight,
-  saveCheckInPassenger,
-  deleteCheckInPassenger
-} from '../../api/passengerService';
+  loadPassengersList,
+  saveUpdatePassengersList,
+  deletePassengerDetails
+} from '../../redux/actions/passengerAction';
 
 const styles = (theme) => ({
   root: {
@@ -41,10 +41,13 @@ const styles = (theme) => ({
 });
 
 const PassengerCheckInPage = () => {
+  const dispatch = useDispatch();
+  const passengers = useSelector((state) => console.log(state) || state.passengers);
+  const users = useSelector((state) => state.auth.users);
   const classes = useClasses(styles);
   const [flightId, setFlightId] = React.useState(1);
   const [data, setData] = React.useState([]);
-  const users = useSelector((state) => state.auth.users);
+
   // eslint-disable-next-line no-unused-vars
   const seats = [
     {
@@ -65,40 +68,26 @@ const PassengerCheckInPage = () => {
     }
   ];
 
-  const fetchData = async (flightId) => {
-    await getCheckInPassengersByFlight(flightId).then((response) => {
-      if (response) {
-        setData(response);
-      }
-    });
-  };
-
   React.useEffect(() => {
-    fetchData(flightId);
+    if (passengers.length === 0) dispatch(loadPassengersList());
+
+    const response = passengers.filter((x) => x.flight === flightId.toString());
+    setData(response);
   }, [flightId]);
 
   const selectedFlight = (value) => {
-    console.log(value);
     setFlightId(value);
   };
 
   const onRowUpdating = async (e) => {
     const initialServiceList = { ...e.oldData };
     const updatedService = Object.assign({}, initialServiceList, { ...e.newData });
-    await saveCheckInPassenger(updatedService)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
+    dispatch(saveUpdatePassengersList(updatedService));
   };
 
   const onRowRemoving = async (e) => {
     const { id } = e.data;
-    await deleteCheckInPassenger(id)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
+    dispatch(deletePassengerDetails(id));
   };
 
   return (
@@ -106,6 +95,7 @@ const PassengerCheckInPage = () => {
       <div className={classes.root}>
         <Grid container spacing={1}>
           <Paper className={classes.paper}>
+            <Typography variant="h5">Passengers Check-in</Typography>
             <Box component={'div'}>
               <FlightData getSelectedFlight={selectedFlight} />
             </Box>

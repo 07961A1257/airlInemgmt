@@ -9,6 +9,7 @@ import {
   loadAncillaryList,
   saveUpdateAncillaryList
 } from '../../redux/actions/ancillaryAction';
+import { Typography } from '@mui/material';
 
 const initialServiceList = {
   flight: '',
@@ -42,6 +43,7 @@ const AncillaryServicePage = () => {
 
   return (
     <React.Fragment>
+      <Typography variant="h5">Ancillary Services</Typography>
       <DataGrid
         id="grid"
         showBorders={true}

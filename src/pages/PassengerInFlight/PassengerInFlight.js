@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Grid, Paper, Box } from '@mui/material';
+import { Container, Grid, Paper, Box, Typography } from '@mui/material';
 import DataGrid, {
   Scrolling,
   Paging,
@@ -69,6 +69,7 @@ const PassengerInFlight = () => {
     <Container className={classes.root}>
       <Grid container spacing={1}>
         <Paper className={classes.paper}>
+          <Typography variant="h5">Passenger In-Flight</Typography>
           <Box component={'div'}>
             <FlightData getSelectedFlight={selectedFlight} />
           </Box>

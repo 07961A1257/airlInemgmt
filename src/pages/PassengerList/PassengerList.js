@@ -48,7 +48,7 @@ const PassengerList = () => {
 
   return (
     <Container>
-      <Typography variant="h3">Passengers List</Typography>
+      <Typography variant="h5">Passengers List</Typography>
       <DataGrid
         dataSource={passengers}
         showBorders={true}
